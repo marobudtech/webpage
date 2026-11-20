@@ -56,6 +56,12 @@
       <h2>PRECEDENT</h2>
       <p class="acronym"><b>P</b>recedent-driven <b>R</b>easoning <b>E</b>ngine for <b>C</b>ombat <b>E</b>xperimentation, <b>D</b>ecision support and <b>E</b>valuation of <b>N</b>ovel <b>T</b>actics</p>
       <p class="lead">A reasoning engine that builds on precedent: it turns publicly reported drone and missile raids into exercises, supports course-of-action decisions and scores each of them. A language model proposes, code verifies, the human commits. First application: integrated air and missile defence (IAMD) and counter-UAS raid training, on premises with an open-weight language model.</p>
+      <ul class="caps">
+        <li>AI scenario generation</li>
+        <li>Raid pattern transfer to a new territory</li>
+        <li>AI-written MSEL</li>
+        <li>AI critic of decisions</li>
+      </ul>
       <div class="grid">
         <div class="card">
           <h3>Combat experimentation</h3>
@@ -85,41 +91,6 @@
           </ul>
         </div>
       </div>
-      <h3 class="sub">Architecture</h3>
-      <p class="sublead">Three stages share one versioned scenario package, exchanged over a documented service API. Modules marked LLM use a language model; everything that scores or records is deterministic code.</p>
-      <div class="arch">
-        <div class="stage">
-          <h4><span class="n">1</span>Learn<small>public raid data</small></h4>
-          <ul>
-            <li class="mod"><b>Data module</b><span>raid records with source identifiers</span></li>
-            <li class="mod"><b>Knowledge base</b><span class="tag">LLM</span><span>tactic cards from public texts, human-approved</span></li>
-            <li class="mod"><b>Scenario package</b><span>one versioned contract between all modules</span></li>
-          </ul>
-        </div>
-        <div class="stage">
-          <h4><span class="n">2</span>Transfer<small>onto the trainee's territory</small></h4>
-          <ul>
-            <li class="mod dev"><b>Adversary</b><span class="tag">LLM</span><span>retrieves tactics, composes the raid</span></li>
-            <li class="mod"><b>Pattern transfer</b><span>geometry only, synthetic objects</span></li>
-            <li class="mod"><b>MSEL generator</b><span class="tag">LLM</span><span>code fixes the facts, the language model words them</span></li>
-          </ul>
-        </div>
-        <div class="stage wide">
-          <h4><span class="n">3</span>Train<small>commander and instructor</small></h4>
-          <ul>
-            <li class="mod"><b>Trainer</b><span>wave-by-wave decisions, rule check</span></li>
-            <li class="mod dev"><b>Planner</b><span class="tag">LLM</span><span>plan and order</span></li>
-            <li class="mod"><b>Critic</b><span class="tag">LLM</span><span>objections to the plan</span></li>
-            <li class="mod key"><b>Human commit</b><span>the only recorded decision</span></li>
-            <li class="mod"><b>Rule checker, adjudicator, scoring</b><span>deterministic; baseline and oracle</span></li>
-            <li class="mod"><b>Audit journal</b><span>decisions, advice, rationales, scores</span></li>
-            <li class="mod dev"><b>After-action reviewer</b><span class="tag">LLM</span><span>reads rationales, drafts the debrief</span></li>
-          </ul>
-        </div>
-      </div>
-      <p class="band llm"><b>Under every language-model output:</b> grammar constraint · number gate · abstention · rule and fact checks by code</p>
-      <p class="band"><b>Deployment:</b> one open-weight model on premises · service API</p>
-      <p class="credit">Dashed: module in development.</p>
       <h3 class="sub">Screens</h3>
       <div class="shots">
         <figure>

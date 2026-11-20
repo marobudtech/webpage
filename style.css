@@ -66,29 +66,11 @@ section h2 + .grid { margin-top: 2.4rem; }   /* cards right under a heading: sam
 .card li::before { content: ""; position: absolute; left: 0; top: 1.05rem; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
 .sub { font-size: 1.2rem; margin: 3rem 0 0; }
-.sublead { color: var(--ink-2); max-width: 72ch; margin: .6rem 0 0; }
-/* architecture: three stages side by side, the third twice as wide with its modules in two columns */
-.arch { display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 1.4rem; margin-top: 1.4rem; }
-.stage { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1.2rem; }
-.stage h4 { margin: 0 0 1rem; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .08em; }
-.stage h4 .n { color: var(--accent); margin-right: .6rem; }
-.stage h4 small { display: block; font-size: .85rem; font-weight: 400; color: var(--ink-2); text-transform: none; letter-spacing: 0; margin-top: .15rem; }
-.stage ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
-.stage.wide ul { grid-template-columns: 1fr 1fr; }
-.stage.wide li:last-child:nth-child(odd) { grid-column: 1 / -1; }
-.mod { position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: .7rem .9rem; }
-.mod b { display: block; font-size: 1rem; }
-.mod b:has(+ .tag) { padding-right: 2.8rem; }
-.mod span { display: block; font-size: .9rem; color: var(--ink-2); }
-.mod .tag { position: absolute; top: .65rem; right: .7rem; font-size: .7rem; font-weight: 700; letter-spacing: .06em; color: #111; background: var(--accent); border-radius: 4px; padding: .05rem .4rem; }
-.mod.dev { border-style: dashed; border-color: #5a6b7d; }
-.mod.key { border-color: var(--accent); }
-.band { margin: 1.4rem 0 0; padding: .8rem 1.2rem; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink-2); font-size: .95rem; }
-.band + .band { margin-top: .7rem; }
-.band b { color: var(--ink); }
-.band.llm { border-color: var(--accent); }
-@media (max-width: 960px) { .arch { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { .stage.wide ul { grid-template-columns: 1fr; } }
+/* four capabilities in short, between the lead and the cards */
+.lead:has(+ .caps) { margin-bottom: 1.4rem; }
+.caps { list-style: none; margin: 0 0 2.4rem; padding: 0; display: flex; flex-wrap: wrap; gap: .7rem; }
+.caps li { border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 6px; background: var(--card);
+  padding: .5rem 1rem; font-size: 1.05rem; font-weight: 600; }
 
 .shots { display: grid; gap: 2rem; margin-top: 1.2rem; }
 .shots figure { margin: 0; }

@@ -55,36 +55,83 @@
       <p class="eyebrow">Product</p>
       <h2>PRECEDENT</h2>
       <p class="acronym"><b>P</b>recedent-driven <b>R</b>easoning <b>E</b>ngine for <b>C</b>ombat <b>E</b>xperimentation, <b>D</b>ecision support and <b>E</b>valuation of <b>N</b>ovel <b>T</b>actics</p>
-      <p class="lead">A reasoning engine that builds on precedent: it turns historical engagements into scenarios, adjudicates course-of-action decisions and evaluates emerging tactics, techniques and procedures (TTPs). First application: integrated air and missile defence (IAMD) and counter-UAS raid training.</p>
+      <p class="lead">A reasoning engine that builds on precedent: it turns publicly reported drone and missile raids into exercises, supports course-of-action decisions and scores each of them. A language model proposes, code verifies, the human commits. First application: integrated air and missile defence (IAMD) and counter-UAS raid training, on premises with an open-weight language model.</p>
       <div class="grid">
         <div class="card">
           <h3>Combat experimentation</h3>
-          <p>Scenario generation from a curated knowledge base of historical drone and missile raids.</p>
+          <p>Scenario generation from publicly reported drone and missile raids and a knowledge base of observed tactics.</p>
           <ul>
             <li>Raid composition, waves, ingress corridors, weapon classes</li>
-            <li>Defender layers and ammunition states</li>
-            <li>Language-model drafting, rule-based validation</li>
+            <li>Raid patterns moved onto the trainee's own territory, with synthetic training objects</li>
+            <li>Briefing and timed inject list (MSEL) for each exercise</li>
           </ul>
         </div>
         <div class="card">
           <h3>Decision support</h3>
-          <p>Layered air defence as a COA problem: assign sensors and effectors across corridors and waves, commit, see the outcome.</p>
+          <p>Layered air defence as a COA problem: task units across layers and corridors before each wave, commit, see the outcome.</p>
           <ul>
-            <li>Deterministic adjudication engine</li>
-            <li>Monte Carlo runs for the spread</li>
-            <li>Oracle and rule-based baselines as the reference</li>
+            <li>Language-model advisor drafts a plan; rules check it before it is shown</li>
+            <li>Deterministic adjudication engine scores every plan against a rule-based baseline and an oracle</li>
+            <li>The only recorded decision is the human commit</li>
           </ul>
         </div>
         <div class="card">
           <h3>Evaluation of novel tactics</h3>
           <p>After-action review that names what was good, what was wrong and why.</p>
           <ul>
-            <li>Critic module detects known planning flaws</li>
+            <li>Critic challenges the plan before the commit</li>
             <li>Detection and false-alarm rates measured against seeded defects</li>
-            <li>Every reported number comes from a file or a command</li>
+            <li>Every number shown traces to its source; a number without one is removed</li>
           </ul>
         </div>
       </div>
+      <h3 class="sub">Architecture</h3>
+      <p class="sublead">Three stages share one versioned scenario package, exchanged over a documented service API. Modules marked LLM use a language model; everything that scores or records is deterministic code.</p>
+      <div class="arch">
+        <div class="stage">
+          <h4><span class="n">1</span>Learn<small>public raid data</small></h4>
+          <ul>
+            <li class="mod"><b>Data module</b><span>raid records with source identifiers</span></li>
+            <li class="mod"><b>Knowledge base</b><span class="tag">LLM</span><span>tactic cards from public texts, human-approved</span></li>
+            <li class="mod"><b>Scenario package</b><span>one versioned contract between all modules</span></li>
+          </ul>
+        </div>
+        <div class="stage">
+          <h4><span class="n">2</span>Transfer<small>onto the trainee's territory</small></h4>
+          <ul>
+            <li class="mod dev"><b>Adversary</b><span class="tag">LLM</span><span>retrieves tactics, composes the raid</span></li>
+            <li class="mod"><b>Pattern transfer</b><span>geometry only, synthetic objects</span></li>
+            <li class="mod"><b>MSEL generator</b><span class="tag">LLM</span><span>code fixes the facts, the language model words them</span></li>
+          </ul>
+        </div>
+        <div class="stage wide">
+          <h4><span class="n">3</span>Train<small>commander and instructor</small></h4>
+          <ul>
+            <li class="mod"><b>Trainer</b><span>wave-by-wave decisions, rule check</span></li>
+            <li class="mod dev"><b>Planner</b><span class="tag">LLM</span><span>plan and order</span></li>
+            <li class="mod"><b>Critic</b><span class="tag">LLM</span><span>objections to the plan</span></li>
+            <li class="mod key"><b>Human commit</b><span>the only recorded decision</span></li>
+            <li class="mod"><b>Rule checker, adjudicator, scoring</b><span>deterministic; baseline and oracle</span></li>
+            <li class="mod"><b>Audit journal</b><span>decisions, advice, rationales, scores</span></li>
+            <li class="mod dev"><b>After-action reviewer</b><span class="tag">LLM</span><span>reads rationales, drafts the debrief</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="band llm"><b>Under every language-model output:</b> grammar constraint · number gate · abstention · rule and fact checks by code</p>
+      <p class="band"><b>Deployment:</b> one open-weight model on premises · service API</p>
+      <p class="credit">Dashed: module in development.</p>
+      <h3 class="sub">Screens</h3>
+      <div class="shots">
+        <figure>
+          <a href="precedent-ukraine.webp"><img src="precedent-ukraine.webp" width="1600" height="900" loading="lazy" alt="PRECEDENT operations screen: map of Ukraine with the arcs of a reported raid night and the tasking panel"></a>
+          <figcaption><b>Operations screen.</b> A publicly reported raid night on Ukraine, replayed wave by wave. Before each wave the trainee tasks air-defence units; a rule check answers at every change.</figcaption>
+        </figure>
+        <figure>
+          <a href="precedent-czechia.webp"><img src="precedent-czechia.webp" width="1600" height="900" loading="lazy" alt="PRECEDENT pattern transfer screen: map of the Czech Republic with the same raid pattern and synthetic exercise objects"></a>
+          <figcaption><b>Pattern transfer.</b> The pattern of the same night (direction, distance, timing, counts) moved onto the Czech Republic as an exercise assumption. All objects are synthetic training points; none is a real object and the screen is not a threat assessment.</figcaption>
+        </figure>
+      </div>
+      <p class="credit">Map data: Mapzen terrain tiles, OpenFreeMap, OpenMapTiles, OpenStreetMap contributors.</p>
       <p class="note">PRECEDENT is an exercise and experimentation tool. Scenario content consists of exercise assumptions derived from open sources and is labelled as such. It carries no operational or classified data and is not a targeting, fire-control or command system.</p>
     </div>
   </section>

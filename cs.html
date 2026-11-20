@@ -55,36 +55,83 @@
       <p class="eyebrow">Produkt</p>
       <h2>PRECEDENT</h2>
       <p class="acronym"><b>P</b>recedent-driven <b>R</b>easoning <b>E</b>ngine for <b>C</b>ombat <b>E</b>xperimentation, <b>D</b>ecision support and <b>E</b>valuation of <b>N</b>ovel <b>T</b>actics</p>
-      <p class="lead">Uvažovací engine, který staví na precedentu: z historických střetnutí vytváří scénáře, rozhoduje o variantách činnosti a vyhodnocuje nové taktiky, techniky a postupy (TTP). První nasazení: integrovaná protivzdušná a protiraketová obrana (IAMD) a výcvik obrany proti náletům bezpilotních prostředků (C-UAS).</p>
+      <p class="lead">Uvažovací engine, který staví na precedentu: z veřejně hlášených dronových a raketových náletů vytváří cvičení, podporuje rozhodování o variantách činnosti a každé rozhodnutí ohodnotí. Jazykový model navrhuje, kód ověřuje, člověk rozhoduje. První nasazení: integrovaná protivzdušná a protiraketová obrana (IAMD) a výcvik obrany proti náletům bezpilotních prostředků (C-UAS), s otevřeným jazykovým modelem provozovaným u uživatele (on-premises).</p>
       <div class="grid">
         <div class="card">
           <h3>Bojové experimentování</h3>
-          <p>Generování scénářů z kurátorované znalostní báze historických dronových a raketových náletů.</p>
+          <p>Generování scénářů z veřejně hlášených dronových a raketových náletů a ze znalostní báze pozorovaných taktik.</p>
           <ul>
             <li>Složení náletu, vlny, koridory, třídy zbraní</li>
-            <li>Vrstvy obrany a stavy munice</li>
-            <li>Jazykový model navrhuje, pravidlová vrstva ověřuje</li>
+            <li>Vzory náletů přenesené na vlastní území cvičícího, se syntetickými cvičnými objekty</li>
+            <li>Briefing a časovaný seznam rozehrávek (MSEL) ke každému cvičení</li>
           </ul>
         </div>
         <div class="card">
           <h3>Podpora rozhodování</h3>
-          <p>Vrstvená protivzdušná obrana jako úloha volby varianty činnosti: přidělit senzory a účinné prostředky na koridory a vlny, potvrdit, vidět výsledek.</p>
+          <p>Vrstvená protivzdušná obrana jako úloha volby varianty činnosti: před každou vlnou přidělit jednotky na vrstvy a koridory, potvrdit, vidět výsledek.</p>
           <ul>
-            <li>Deterministický rozhodčí engine</li>
-            <li>Monte Carlo běhy pro rozptyl</li>
-            <li>Orákulum a pravidlové základny jako reference</li>
+            <li>Jazykový model jako poradce navrhne plán; pravidla ho zkontrolují dřív, než se zobrazí</li>
+            <li>Deterministický rozhodčí engine hodnotí každý plán proti pravidlové základně a orákulu</li>
+            <li>Jediné zaznamenané rozhodnutí je potvrzení člověkem</li>
           </ul>
         </div>
         <div class="card">
           <h3>Vyhodnocení nových taktik</h3>
           <p>Vyhodnocení po akci (AAR), které pojmenuje, co bylo dobře, co špatně a proč.</p>
           <ul>
-            <li>Modul kritika odhaluje známé chyby plánování</li>
+            <li>Kritik zpochybňuje plán před potvrzením</li>
             <li>Záchyt a falešné poplachy měřené proti zasetým vadám</li>
-            <li>Každé reportované číslo pochází ze souboru nebo příkazu</li>
+            <li>Každé zobrazené číslo je dohledatelné ke zdroji; číslo bez zdroje se odstraní</li>
           </ul>
         </div>
       </div>
+      <h3 class="sub">Architektura</h3>
+      <p class="sublead">Tři fáze sdílejí jeden verzovaný balíček scénáře, předávaný přes dokumentované API služby. Moduly označené LLM používají jazykový model; vše, co hodnotí nebo zaznamenává, je deterministický kód.</p>
+      <div class="arch">
+        <div class="stage">
+          <h4><span class="n">1</span>Poznat<small>veřejná data o náletech</small></h4>
+          <ul>
+            <li class="mod"><b>Datový modul</b><span>záznamy o náletech s identifikátory zdrojů</span></li>
+            <li class="mod"><b>Znalostní báze</b><span class="tag">LLM</span><span>karty taktik z veřejných textů, schválené člověkem</span></li>
+            <li class="mod"><b>Balíček scénáře</b><span>jeden verzovaný kontrakt mezi všemi moduly</span></li>
+          </ul>
+        </div>
+        <div class="stage">
+          <h4><span class="n">2</span>Přenést<small>na území cvičícího</small></h4>
+          <ul>
+            <li class="mod dev"><b>Protivník</b><span class="tag">LLM</span><span>vyhledá taktiky, složí nálet</span></li>
+            <li class="mod"><b>Přenos vzoru</b><span>jen geometrie, syntetické objekty</span></li>
+            <li class="mod"><b>Generátor MSEL</b><span class="tag">LLM</span><span>fakta určuje kód, jazykový model je formuluje</span></li>
+          </ul>
+        </div>
+        <div class="stage wide">
+          <h4><span class="n">3</span>Cvičit<small>velitel a instruktor</small></h4>
+          <ul>
+            <li class="mod"><b>Trenažér</b><span>rozhodnutí po vlnách, kontrola pravidel</span></li>
+            <li class="mod dev"><b>Plánovač</b><span class="tag">LLM</span><span>plán a rozkaz</span></li>
+            <li class="mod"><b>Kritik</b><span class="tag">LLM</span><span>námitky k plánu</span></li>
+            <li class="mod key"><b>Potvrzení člověkem</b><span>jediné zaznamenané rozhodnutí</span></li>
+            <li class="mod"><b>Kontrola pravidel, rozhodčí, bodování</b><span>deterministické; základna a orákulum</span></li>
+            <li class="mod"><b>Auditní deník</b><span>rozhodnutí, rady, zdůvodnění, skóre</span></li>
+            <li class="mod dev"><b>Hodnotitel po akci</b><span class="tag">LLM</span><span>čte zdůvodnění, navrhuje rozbor</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="band llm"><b>Pod každým výstupem jazykového modelu:</b> gramatické omezení · brána čísel · zdržení se odpovědi · kontrola pravidel a faktů kódem</p>
+      <p class="band"><b>Nasazení:</b> jeden otevřený model u uživatele (on-premises) · API služby</p>
+      <p class="credit">Čárkovaně: modul ve vývoji.</p>
+      <h3 class="sub">Obrazovky</h3>
+      <div class="shots">
+        <figure>
+          <a href="precedent-ukraine.webp"><img src="precedent-ukraine.webp" width="1600" height="900" loading="lazy" alt="Operační obrazovka PRECEDENT: mapa Ukrajiny s oblouky hlášeného nočního náletu a panelem přidělení jednotek"></a>
+          <figcaption><b>Operační obrazovka.</b> Veřejně hlášený noční nálet na Ukrajinu, přehrávaný po vlnách. Před každou vlnou cvičící přiděluje jednotky protivzdušné obrany; kontrola pravidel odpovídá při každé změně.</figcaption>
+        </figure>
+        <figure>
+          <a href="precedent-czechia.webp"><img src="precedent-czechia.webp" width="1600" height="900" loading="lazy" alt="Obrazovka přenosu vzoru PRECEDENT: mapa České republiky se stejným vzorem náletu a syntetickými cvičnými objekty"></a>
+          <figcaption><b>Přenos vzoru.</b> Vzor téže noci (směr, vzdálenost, časování, počty) přenesený na území České republiky jako cvičný předpoklad. Všechny objekty jsou syntetické cvičné body; žádný není skutečný objekt a obrazovka není hodnocením hrozby.</figcaption>
+        </figure>
+      </div>
+      <p class="credit">Mapové podklady: Mapzen terrain tiles, OpenFreeMap, OpenMapTiles, přispěvatelé OpenStreetMap.</p>
       <p class="note">PRECEDENT je cvičný a experimentální nástroj. Obsah scénářů tvoří cvičné předpoklady odvozené z otevřených zdrojů a je tak označen. Nenese žádná operační ani utajovaná data a není to systém pro zaměřování, řízení palby ani velení.</p>
     </div>
   </section>
